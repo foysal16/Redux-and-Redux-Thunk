@@ -4,20 +4,16 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { Typography, makeStyles } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 
-import { setProductAddToProduct } from "../../store/action/productAddAction";
-
-import Icon from "@material-ui/core/Icon";
-
 import { Button } from "@material-ui/core";
 
 import TextField from "@material-ui/core/TextField";
 
+import { useDispatch } from "react-redux";
+
+import { setProductAddToProduct } from "../../store/action/productAddAction";
+
 import { useState } from "react";
 import axios from "axios";
-
-import { useHistory } from "react-router-dom";
-
-import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles({
   filed: {
@@ -36,13 +32,14 @@ const AddProduct = () => {
     category: "",
   });
 
-  const history = useHistory();
+  const dispatch = useDispatch();
 
   const classes = useStyles();
 
   const newProduct = (p, key) => {
-    setProduct({ ...product, [key]: p.target.value });
-    history.push("/");
+    dispatch(
+      setProductAddToProduct(setProduct({ ...product, [key]: p.target.value }))
+    );
   };
 
   const newProductAdd = () => {

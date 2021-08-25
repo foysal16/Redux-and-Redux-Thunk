@@ -1,4 +1,4 @@
-export const setProductListToStore = (productList) => ({
+export const setProductEditToStore = (productList) => ({
     type: 'EDIT_PRODUCT' , 
     payload: productList
 });

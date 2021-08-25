@@ -9,6 +9,11 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { Button } from "@material-ui/core";
 
+import { useDispatch, useSelector } from "react-redux";
+import { setProductEditToStore } from "../../store/action/productEditAction";
+
+import { setProductListToStore } from "../../store/action/productListAction";
+
 import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles({
@@ -24,6 +29,9 @@ const UpdateProduct = () => {
   const { id } = useParams();
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+  const { currentProduct } = useSelector((store) => store.editStore);
+
   const [product, setProductEdit] = useState({
     title: "",
     price: "",
@@ -33,8 +41,11 @@ const UpdateProduct = () => {
   });
 
   const UpdateProduct = (p) => {
-    setProductEdit({ ...product, [p.target.value]: p.target.value });
-    console.log(p.target.value, "=======previous data");
+    dispatch(
+      setProductEditToStore(
+        setProductEdit({ ...product, [p.target.value]: p.target.value })
+      )
+    );
   };
 
   /*const onSubmitsave = async (e) => {
@@ -45,7 +56,7 @@ const UpdateProduct = () => {
   };*/
 
   const UpdateNewProduct = async (p) => {
-    p.preventDefault();
+    p.preventDefault(setProductEditToStore);
     axios
       .put(`https://fakestoreapi.com/products/${id}`, {
         title: product.title,
@@ -68,8 +79,7 @@ const UpdateProduct = () => {
 
   const loadUsers = async (p) => {
     const result = await axios.get(`https://fakestoreapi.com/products/${id}`);
-
-    setProductEdit(result.data);
+    dispatch(setProductEditToStore(setProductEdit(result.data)));
   };
 
   return (
@@ -82,7 +92,7 @@ const UpdateProduct = () => {
           component="h2"
           gutterBottom
         >
-          ADD PRODUCT
+          EDIT PRODUCT
         </Typography>
 
         <form noValidate autoComplete="off">

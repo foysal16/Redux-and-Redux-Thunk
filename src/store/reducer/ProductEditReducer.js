@@ -1,5 +1,5 @@
 const initiaState = {
-    currentProduct: null,
+    currentProduct: [],
 }
 
 const productEditReducer = (state = initiaState, action) => {
