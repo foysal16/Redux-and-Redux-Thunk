@@ -1,11 +1,10 @@
 const initiaState = {
     productList: [],
-    currentProduct: null,
 }
 
 
-const myReducer = (state = initiaState, action) =>{
-    if(action.type === 'UPDATE_PRODCUT_LIST'){
+const productListReducer = (state = initiaState, action) => {
+    if(action.type === 'UPDATE_PRODUCT_LIST'){
         return {...state, productList: action.payload};
     }
     else{
@@ -13,4 +12,4 @@ const myReducer = (state = initiaState, action) =>{
     }
 }
 
-export default myReducer;
+export default productListReducer;

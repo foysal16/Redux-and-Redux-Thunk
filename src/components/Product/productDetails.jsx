@@ -1,28 +1,32 @@
 import React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 
+import { setProductDetailsToStore } from "../../store/action/productDetailsAction";
+
 import { useParams, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductDetails = () => {
   const { id } = useParams();
 
-  const history = useHistory();
+  const { currentProduct } = useSelector((store) => store.detailStore);
+  const dispatch = useDispatch();
 
-  const [ProductDetails, setProductDetails] = useState([]);
+  const history = useHistory();
   useEffect(() => {
     axios
       .get(`https://fakestoreapi.com/products/${id}`)
       .then((response) => {
-        setProductDetails(response.data);
+        dispatch(setProductDetailsToStore(response.data));
       })
       .catch((error) => {
         console.log(error, "============ERROR");
       });
-  }, [id]);
+  }, []);
 
   const UpdateProduct = (id) => {
     history.push(`/Update-product/${id}`);
@@ -38,21 +42,21 @@ const ProductDetails = () => {
     <React.Fragment>
       <CssBaseline />
       <Container fixed>
-        <img src={ProductDetails.image} style={{ width: "250px" }} alt="" />
+        <img src={currentProduct?.image} style={{ width: "250px" }} alt="" />
 
-        <p>{ProductDetails.title}</p>
-        <p>{ProductDetails.description}</p>
-        <p>Category: {ProductDetails.price}</p>
-        <p>price: {ProductDetails.price}</p>
+        <p>{currentProduct?.title}</p>
+        <p>{currentProduct?.description}</p>
+        <p>Category: {currentProduct?.category}</p>
+        <p>price: {currentProduct?.price}</p>
         <Button
-          onClick={() => UpdateProduct(ProductDetails.id)}
+          onClick={() => UpdateProduct(currentProduct?.id)}
           variant="contained"
           color="primary"
         >
           Update Product
         </Button>
         <Button
-          onClick={() => DeleteProduct(ProductDetails.id)}
+          onClick={() => DeleteProduct(currentProduct?.id)}
           variant="contained"
           color="secondary"
         >

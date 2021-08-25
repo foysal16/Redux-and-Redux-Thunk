@@ -50,30 +50,28 @@ return (
 
   <ThemeProvider theme={theme}> 
     <Router>
-      
       <Navbar />
-      <Grid container >
-      <Switch>
-          <Route exact path="/">
-            <ProductList userList={userList} />
-          </Route>
+      <Grid container justifyContent={'center'}>
+        <Switch>
+            <Route exact path="/">
+              <ProductList userList={userList} />
+            </Route>
 
-          <Route path="/product-details/:id">
-            <ProductDetails userList={userList} />
-          </Route>
+            <Route path="/product-details/:id">
+              <ProductDetails userList={userList} />
+            </Route>
 
-          <Route exact path="/addproduct">
-            <AddProduct />
-          </Route>
+            <Route exact path="/addproduct">
+              <AddProduct />
+            </Route>
 
-          <Route exact path="/Update-product/:id">
-            <UpdateProduct />
-          </Route>
-          <Route path="*"><h1>404</h1></Route>
-      </Switch>
-
-      
+            <Route exact path="/Update-product/:id">
+              <UpdateProduct />
+            </Route>
+            <Route path="*"><h1>404</h1></Route>
+        </Switch>
       </Grid>
+      
     </Router>
     <Footer />
    </ThemeProvider>
